@@ -28,9 +28,47 @@ CREATE TABLE clientes(
 	cli_obs TEXT
 );
 
-CREATE TABLE ANAMINESE(
+CREATE TABLE servicos(
+	srv_id INT AUTO_INCREMENT PRIMARY KEY,
+	srv_nome VARCHAR(255) NOT NULL,
+	srv_valor DECIMAL(16,2) NOT NULL
+);
+
+
+CREATE TABLE orcamento(
+	orc_id INT AUTO_INCREMENT PRIMARY KEY,
+	orc_data DATE,
+	orc_hora TIME,
+	orc_cliente INT NOT NULL,
+	orc_dentista INT NOT NULL,
+	orc_valor_total DECIMAL(16,2),
+	orc_forma_pagamento ENUM('DINHEIRO','CREDITO/DÉBITO','CHEQUE'),
+	orc_parcelas INT,
+	orc_obs TEXT
+);
+
+
+CREATE TABLE orcamento_item(
+	ori_id INT AUTO_INCREMENT PRIMARY KEY,
+	ori_atendimento INT NOT NULL,
+	ori_servico INT NOT NULL,
+	ori_valor DECIMAL(16,2)
+);
+
+CREATE TABLE parcelas(
+	par_id INT AUTO_INCREMENT PRIMARY KEY,
+	par_orcamento INT NOT NULL,
+	par_numero_parcela INT,
+	par_valor DECIMAL(16,2),
+	par_pago BOOLEAN DEFAULT FALSE NOT NULL
+);
+
+
+
+CREATE TABLE anaminese(
 	ans_id INT AUTO_INCREMENT PRIMARY KEY,
 	ans_cliente INT NOT NULL,
+	ans_orcamento INT,
 	ans_fumante BOOLEAN DEFAULT FALSE NOT NULL,
 	ans_exercicio BOOLEAN DEFAULT FALSE NOT NULL,
 	ans_doenca BOOLEAN DEFAULT FALSE NOT NULL,
@@ -47,3 +85,4 @@ CREATE TABLE ANAMINESE(
 	ans_desc_DST VARCHAR(255),
 	ans_obs TEXT
 );
+
